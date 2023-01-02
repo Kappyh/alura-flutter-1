@@ -3,11 +3,18 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool opacidade = true;
 
   // This widget is the root of your application.
   @override
@@ -23,40 +30,49 @@ class MyApp extends StatelessWidget {
           title: const Text('Tarefas'),
           leading: Container(),
         ),
-        body: ListView(
-          children: const [
-            Padding(
-              padding: EdgeInsets.only(top: 8),
-              child: Tasks(
-                'Estudar Flutter',
-                'https://pbs.twimg.com/media/Eu7m692XIAEvxxP?format=png&name=large',
-                3
+        body: AnimatedOpacity(
+          duration: const Duration(milliseconds: 800),
+          opacity: opacidade ? 1 : 0,
+          child: ListView(
+            children: const [
+              Padding(
+                padding: EdgeInsets.only(top: 8),
+                child: Tasks(
+                  'Estudar Flutter',
+                  'https://pbs.twimg.com/media/Eu7m692XIAEvxxP?format=png&name=large',
+                  3
+                ),
               ),
-            ),
-            Tasks(
-              'Andar de Bike',
-              'https://tswbike.com/wp-content/uploads/2020/09/108034687_626160478000800_2490880540739582681_n-e1600200953343.jpg',
-              4
-            ),
-            Tasks(
-              'Ler',
-              'https://thebogotapost.com/wp-content/uploads/2017/06/636052464065850579-137719760_flyer-image-1.jpg',
-              2
-            ),
-            Tasks(
-              'Meditar',
-              'https://manhattanmentalhealthcounseling.com/wp-content/uploads/2019/06/Top-5-Scientific-Findings-on-MeditationMindfulness-881x710.jpeg',
-              5,
-            ),
-            Tasks(
-              'Jogar',
-              'https://i.ibb.co/tB29PZB/kako-epifania-2022-2-c-pia.jpg',
-              1,
-            )
-          ],
+              Tasks(
+                'Andar de Bike',
+                'https://tswbike.com/wp-content/uploads/2020/09/108034687_626160478000800_2490880540739582681_n-e1600200953343.jpg',
+                4
+              ),
+              Tasks(
+                'Ler',
+                'https://thebogotapost.com/wp-content/uploads/2017/06/636052464065850579-137719760_flyer-image-1.jpg',
+                2
+              ),
+              Tasks(
+                'Meditar',
+                'https://manhattanmentalhealthcounseling.com/wp-content/uploads/2019/06/Top-5-Scientific-Findings-on-MeditationMindfulness-881x710.jpeg',
+                5,
+              ),
+              Tasks(
+                'Jogar',
+                'https://i.ibb.co/tB29PZB/kako-epifania-2022-2-c-pia.jpg',
+                1,
+              )
+            ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            setState(() {
+              opacidade = !opacidade;
+            });
+          },
+          child: opacidade ? Icon(Icons.remove_red_eye):Icon(Icons.panorama_fish_eye),
         ),
       ),
     );
@@ -106,8 +122,17 @@ class _TasksState extends State<Tasks> {
                       Container(
                         width: 72,
                         height: 100,
-                        color: Colors.black26,
-                        child: Image.network(widget.foto,fit: BoxFit.cover,),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: Colors.black26,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: Image.network(
+                            widget.foto,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
