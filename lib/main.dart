@@ -134,10 +134,11 @@ class _TasksState extends State<Tasks> {
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 2.0, left: 16.0, right: 16.0, top: 2.0),
+                        padding: const EdgeInsets.only(bottom: 2, left: 16.0, right: 16.0, top: 2.0),
                         child: Container(
-                          height: 104,
+                          height: 1004,
                           width: 52,
+                          color: Colors.blue,
                           child: Column(
                             children: [
                               ElevatedButton(
