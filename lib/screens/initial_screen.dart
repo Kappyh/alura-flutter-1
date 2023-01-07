@@ -1,8 +1,8 @@
 import 'package:alura_flutter_curso_1/components/task.dart';
+import 'package:alura_flutter_curso_1/screens/form_screen.dart';
 import 'package:flutter/material.dart';
 
 class InitialScreen extends StatefulWidget {
-
   const InitialScreen({Key? key}) : super(key: key);
 
   @override
@@ -10,8 +10,6 @@ class InitialScreen extends StatefulWidget {
 }
 
 class _InitialScreenState extends State<InitialScreen> {
-  bool opacidade = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,53 +17,38 @@ class _InitialScreenState extends State<InitialScreen> {
         title: const Text('Tarefas'),
         leading: Container(),
       ),
-      body: AnimatedOpacity(
-        duration: const Duration(milliseconds: 800),
-        opacity: opacidade ? 1 : 0,
-        child: ListView(
-          children: const [
-            Padding(
-              padding: EdgeInsets.only(top: 8),
-              child: Tasks(
-                  'Estudar Flutter',
-                  'assets/images/dash.png',
-                  3
-              ),
-            ),
-            Tasks(
-                'Andar de Bike',
-                'assets/images/bike.webp',
-                4
-            ),
-            Tasks(
-                'Ler',
-                'assets/images/book.jpeg',
-                2
-            ),
-            Tasks(
-              'Meditar',
-              'assets/images/meditar.jpeg',
-              5,
-            ),
-            Tasks(
-              'Jogar',
-              'assets/images/jogar.jpeg',
-              1,
-            ),
-            SizedBox(
-              height: 80,
-            )
-          ],
-        ),
+      body: ListView(
+        children: const [
+          Padding(
+            padding: EdgeInsets.only(top: 8),
+            child: Tasks('Estudar Flutter', 'assets/images/dash.png', 3),
+          ),
+          Tasks('Andar de Bike', 'assets/images/bike.webp', 4),
+          Tasks('Ler', 'assets/images/book.jpeg', 2),
+          Tasks(
+            'Meditar',
+            'assets/images/meditar.jpeg',
+            5,
+          ),
+          Tasks(
+            'Jogar',
+            'assets/images/jogar.jpeg',
+            1,
+          ),
+          SizedBox(
+            height: 80,
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {
-            opacidade = !opacidade;
-          });
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => FormScreen()),
+          );
         },
-        backgroundColor: Colors.redAccent,
-        child: opacidade ? const Icon(Icons.remove_red_eye) : const Icon(Icons.panorama_fish_eye),
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.add),
       ),
     );
   }
